@@ -37,7 +37,7 @@ export default class GameController {
 
         // If window gets resized, rescramble to ensure buttons are within the layout.
         window.addEventListener("resize", () => {
-            if(this.game && !this.game.gameOver) {
+            if(this.game && !this.game.game_over) {
                 this.game.scramblePositions();
             }
         });
@@ -49,6 +49,7 @@ export default class GameController {
     startGame() {
 
         const n = parseInt(this.user_input_for_n.value);
+        const one_sec_in_ms = 1000;
 
         if(!isNaN(n) && n >= 3 && n <= 7) {
             this.message_for_user.textContent = "";
@@ -56,13 +57,12 @@ export default class GameController {
             // Generate n buttons
             this.game.generate(n);
 
-            // Multiply by 1000 as startMemoryPhase() takes in ms through delay()
-            const memorization_time = n * 1000;
+            const memorization_time = n * one_sec_in_ms;
             this.game.triggerScramble(memorization_time);
         } 
         else 
             {
-            this.message_for_user.textContent = USER_MESSAGES.INVALID_INPUT 
+            this.message_for_user.textContent = USER_MESSAGES.WRONG_INPUT 
             || "Cannot retrieve error message from /lang/messages/en/user.js"
             }
     }

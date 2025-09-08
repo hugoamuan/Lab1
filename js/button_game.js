@@ -24,9 +24,9 @@ export default class ButtonGame {
 
         // Internal game state vars managed by the ButtonGame
         this.buttons = [];
-        this.orderToMemorize = [];
-        this.userClicks = [];
-        this.gameOver = false;
+        this.order_to_memorize = [];
+        this.user_clicks = [];
+        this.game_over = false;
     }
 
     /**
@@ -39,23 +39,23 @@ export default class ButtonGame {
         // Reset game state
         this.game_container.innerHTML = "";
         this.buttons = [];
-        this.orderToMemorize = [];
-        this.userClicks = [];
-        this.gameOver = false;
+        this.order_to_memorize = [];
+        this.user_clicks = [];
+        this.game_over = false;
 
         const colours = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
-        const availableColours = [...colours];
+        const available_colours = [...colours];
 
         for (let i = 0; i < n; i++) {
             
             // Pick rand colour and remove it
-            const colourIndex = Math.floor(Math.random() * availableColours.length);
-            const colour = availableColours.splice(colourIndex, 1)[0];
+            const colour_index = Math.floor(Math.random() * available_colours.length);
+            const colour = available_colours.splice(colour_index, 1)[0];
             
             // Create the btn element and save it 
             const btn = new Button(i + 1, colour);
             this.buttons.push(btn);
-            this.orderToMemorize.push(btn.number);
+            this.order_to_memorize.push(btn.number);
 
             // Append it to game div
             this.game_container.appendChild(btn.elt);
@@ -65,6 +65,7 @@ export default class ButtonGame {
     /**
      * Handles the scrambling phase asynchronously, using delays without blocking the main thread so the browser remains responsive.
      * @param {A} ms 
+     * (Had help from ChatGPT to refresh my mind on asynchronous functions, await, and promises.)
      */
     async triggerScramble(ms) {
 
@@ -116,16 +117,18 @@ export default class ButtonGame {
     handleClick(btn) {
 
         // game over do nothing.
-        if (this.gameOver) return;
-        // reveal clicked number 
+        if (this.game_over) return;
+        // if correct show number
         btn.showNumber();
-        this.userClicks.push(btn.number); // Track # of user clicks.
+        this.user_clicks.push(btn.number); // Track # of user clicks by using .length on the []
 
-        const currentIndex = this.userClicks.length - 1;
+        const current_index = this.user_clicks.length - 1;
 
         // Check if click matches the expected order.
-        if (btn.number !== this.orderToMemorize[currentIndex]) {
-            this.gameOver = true;
+
+        // User losses -> reveal og order.
+        if (btn.number !== this.order_to_memorize[current_index]) {
+            this.game_over = true;
             this.message.textContent = USER_MESSAGES.WRONG;
 
             // User losses -> reveal og order.
@@ -133,8 +136,8 @@ export default class ButtonGame {
         } 
         else
             // User wins
-             if(this.userClicks.length === this.orderToMemorize.length) {
-            this.gameOver = true;
+             if(this.user_clicks.length === this.order_to_memorize.length) {
+            this.game_over = true;
             this.message.textContent = USER_MESSAGES.WIN;
         }
     }
@@ -143,6 +146,7 @@ export default class ButtonGame {
      * Creates a promise that resolves (done_waiting() notifies the function that it is complete) after 'ms' seconds. 
      * @param {*} ms 
      * @returns 
+     * (Had help from ChatGPT to refresh my mind on asynchronous functions, await, and promises.)
      */
     delay(ms) {
         return new Promise(done_waiting => setTimeout(done_waiting, ms));
