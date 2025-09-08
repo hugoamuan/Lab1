@@ -90,14 +90,14 @@ export default class ButtonGame {
     scramblePositions() {
 
         // Check current screen dimensions w/ a safety buffer.
-        const width = this.game_container.clientWidth - 50;
-        const height = this.game_container.clientHeight - 50;
+        const screen_width = this.game_container.clientWidth - 50;
+        const screen_height = this.game_container.clientHeight - 50;
 
-        // for-each loop on buttons[] that generates a random x and y value to modify a btn's pos.
+        // for-each loop on buttons[] that generates a random horizontal and vertical values to modify a btn's pos.
         this.buttons.forEach(btn => {
-            const x = Math.floor(Math.random() * width);
-            const y = Math.floor(Math.random() * height);
-            btn.setPos(x, y);
+            const x_axis = Math.floor(Math.random() * screen_width);
+            const y_axis = Math.floor(Math.random() * screen_height);
+            btn.setPos(x_axis, y_axis);
         });
     }
 
