@@ -1,0 +1,37 @@
+<!-- 
+@author Hugo Amuan - Set V A01382789
+@version 1.1 
+
+This is the HTML page for a memory game where the user can generate 3 to 7 buttons.
+They must be clicked in their original order after being scrambled.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 1 : Hugo Amuan</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Game initialier: User inputs # of buttons to be memorized -->
+    <div class="game_initializer">
+        <label for="num_buttons">How many buttons to create? (3–7): </label>
+        <div class="submission_area">
+            <input type="text" id="num_buttons">
+            <button id="generate_btn">Go!</button>
+            <p id="invalid_input_message"></p>
+        </div>
+    </div>
+
+    <!-- Dynamically generated buttons will be in this div... -->
+    <div id="game_container">
+    </div>
+
+    <!-- ES6 modules allow  import/export functionality between separate JavaScript files. 
+     Each module is typically in its own file, and you use import/export to share code. -->
+    <script type="module" src="js/script.js"></script>
+
+</body>
+</html>
